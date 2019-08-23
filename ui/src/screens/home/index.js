@@ -43,13 +43,17 @@ export default function HomeScreen() {
         {searchValue => (
           <S.Grid>
             {data.pokemonMany
-              .filter(pokemon =>
-                searchValue
+              .filter(pokemon => {
+                return searchValue
                   ? _.deburr(pokemon.name.toLowerCase()).includes(
+                      _.deburr(searchValue.toLowerCase())
+                    ) || _.deburr(pokemon.type.map(type => type.toLowerCase())).includes(
+                      _.deburr(searchValue.toLowerCase())
+                    ) || _.deburr(pokemon.weaknesses.map(type => type.toLowerCase())).includes(
                       _.deburr(searchValue.toLowerCase())
                     )
                   : true
-              )
+              })
               .map(pokemon => (
                 <S.CardContainer key={pokemon.num}>
                   <S.CardLink to={`/${pokemon.num}`}>
